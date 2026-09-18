@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#202321">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Atelier">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="A quiet space to play. A beautifully tactile piano studio, with touch, sustain, and recording. Works offline.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/practice.css">
+  <title>Atelier — Piano studio</title>
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 5-6 4H2v6h3l6 4zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6m8 4v6"/></symbol>
+    <symbol id="i-pedal" viewBox="0 0 24 24"><path d="M5 17 9 5h6l4 12v3H5zM8 16h8"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></symbol>
+    <symbol id="i-metro" viewBox="0 0 24 24"><path d="m5 21 5-18h4l5 18zM12 16 18 5M9 17h6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h1m4 0h1m4 0h1M6 13h1m4 0h1m4 0h1M7 16h10"/></symbol>
+  </defs></svg>
+  <main class="studio">
+    <section id="sheet-panel" class="sheet-panel" aria-label="Sheet music">
+      <input id="sheet-file" type="file" accept="image/jpeg,image/png,image/webp,application/pdf,.jpg,.jpeg,.png,.webp,.pdf" hidden>
+      <div id="sheet-toolbar" class="sheet-toolbar" aria-label="Sheet music controls" hidden>
+        <button id="replace-sheet" class="sheet-open">Open</button>
+        <span id="sheet-filename" class="sheet-filename"></span>
+        <button id="sheet-zoom-out" class="zoom-button" aria-label="Zoom out">−</button>
+        <button id="sheet-fit" aria-label="Fit page">Fit</button>
+        <button id="sheet-zoom-in" class="zoom-button" aria-label="Zoom in">+</button>
+        <span id="sheet-zoom-value" class="sr-only" role="status">100%</span>
+        <button id="sheet-reset" title="First page, original view">Reset</button>
+        <div id="sheet-navigation" class="sheet-navigation">
+          <button id="sheet-prev" aria-label="Previous page">‹ Previous</button>
+          <span id="sheet-page-count" class="sheet-page-count" role="status">Page 1 / 1</span>
+          <button id="sheet-next" aria-label="Next page">› Next</button>
+        </div>
+      </div>
+      <div id="sheet-viewport" class="sheet-viewport" tabindex="0" aria-label="Sheet music page. Pinch to zoom; drag to pan. Arrow keys turn pages.">
+        <div id="sheet-paper" class="sheet-paper" hidden></div>
+        <div id="sheet-empty" class="sheet-empty"><button id="open-sheet" class="open-score-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h8"/></svg>Open Sheet Music</button></div>
+        <div id="sheet-message" class="sheet-message" role="status" hidden></div>
+        <span class="portrait-hint">For the best piano experience, rotate your iPad to landscape.</span>
+      </div>
+    </section>
+    <div id="practice-divider" class="practice-divider" role="separator" tabindex="0" aria-label="Resize sheet music and piano" aria-orientation="horizontal" aria-valuemin="25" aria-valuemax="55" aria-valuenow="40" aria-controls="sheet-panel keyboard"></div>
+    <section class="instrument" aria-label="Piano studio">
+      <div class="console">
+        <div class="toolbar">
+          <div class="practice-brand">ATELIER<small>Concert Grand</small></div>
+          <span id="sound-type" class="sr-only">Acoustic piano recordings</span><span id="audio-status" class="sr-only">Loading piano</span><span id="recording-caption" class="sr-only"></span>
+          <button id="sustain" class="sustain-button" aria-pressed="false" title="Sustain pedal · hold Space"><svg><use href="#i-pedal"/></svg><span>Sustain</span><i></i></button>
+          <div class="control-group volume-control"><svg><use href="#i-volume"/></svg><input id="volume" type="range" min="0" max="100" value="72" aria-label="Volume"></div>
+          <span class="control-divider"></span>
+          <div class="recorder-controls"><button id="record" class="record-button"><span class="record-dot"></span><span id="record-label">Record</span></button><span id="recording-time" class="recording-time">00:00</span><button id="playback" class="icon-button" aria-label="Play recording" disabled><svg><use href="#i-play"/></svg></button><button id="clear-recording" class="icon-button" aria-label="Delete recording" disabled><svg><use href="#i-trash"/></svg></button></div><div class="metronome-controls"><button id="metronome" aria-label="Metronome" class="metronome-button" aria-pressed="false"><svg><use href="#i-metro"/></svg><span>Metronome</span><i id="beat-light"></i></button><input id="tempo" type="number" min="30" max="240" value="80" aria-label="Metronome tempo in beats per minute"><span class="bpm">BPM</span></div>
+          <button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen"><svg><use href="#i-expand"/></svg></button><button id="settings-toggle" class="icon-button" aria-label="Open settings" title="Settings"><svg><use href="#i-settings"/></svg></button>
+        </div>
+        <div class="keybed"><div id="keyboard" class="keyboard" aria-label="88-key piano, A0 to C8"></div></div>
+        <div class="piano-lip"><span>A0</span><span>ATELIER · 88 KEYS</span><span>C8</span></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="welcome" class="welcome-dialog" aria-labelledby="welcome-title"><div class="welcome-content"><div class="welcome-emblem"><i></i><i></i><i></i><i></i><i></i></div><span class="eyebrow">WELCOME TO ATELIER</span><h2 id="welcome-title">Make yourself<br>at the piano.</h2><p>A quiet space. Eighty-eight keys.<br>Something only you can play.</p><div class="sample-loading"><div class="loading-heading"><span>Loading Concert Grand</span><span id="loading-percent">0%</span></div><progress id="sample-progress" max="100" value="0" aria-label="Piano sample loading progress"></progress><small id="loading-count" aria-live="polite">Preparing the recordings</small></div><button id="start-piano" class="primary-button" disabled>Loading Concert Grand…</button><small id="start-hint">Sound on. Settle in.</small></div></dialog>
+  <dialog id="settings" class="settings-dialog" aria-labelledby="settings-title"><div class="dialog-heading"><div><span class="eyebrow">MAKE IT YOURS</span><h2 id="settings-title">The finer details</h2></div><button id="settings-close" class="icon-button" aria-label="Close settings"><svg><use href="#i-close"/></svg></button></div><label class="setting-row"><span>Note labels<small>Subtle C-note octave markers</small></span><input id="note-labels" class="switch" type="checkbox"></label><label class="setting-row"><span>Volume<small>Find your comfortable listening level</small></span><input id="settings-volume" type="range" min="0" max="100" value="72" aria-label="Master volume"></label><label class="setting-row"><span>Room ambience<small>A little resonance around every note</small></span><input id="reverb" type="range" min="0" max="60" value="14" aria-label="Room ambience"></label><div class="setting-section"><span class="eyebrow">YOUR PRACTICE SPACE</span><div class="practice-presets" aria-label="Practice layout"><button data-practice-ratio="0.5" aria-pressed="false">More Music</button><button data-practice-ratio="0.4" aria-pressed="true">Balanced</button><button data-practice-ratio="0.3" aria-pressed="false">More Piano</button></div><label class="setting-row"><span>Tap edges to turn pages<small>Left / right 15% of the score, at Fit Page</small></span><input id="edge-turns" class="switch" type="checkbox"></label><p class="sheet-storage-note">Your last score and reading position stay on this device. Pinch to zoom, drag to pan; swipe to turn PDF pages at Fit Page.</p><button id="forget-sheet" class="text-button" disabled>Remove saved sheet music</button></div><div class="settings-note"><span class="eyebrow">TAKE YOUR STUDIO WITH YOU</span><p id="offline-status" role="status">Keep this page open online while the piano and sheet music viewer are saved. Then use Safari → Share → Add to Home Screen.</p><p class="sound-note">Salamander Grand Piano by <a href="https://github.com/sfzinstruments/SalamanderGrandPiano" target="_blank" rel="noopener">Alexander Holm</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>. 30 original recordings, losslessly converted to 24-bit WAV. One velocity layer; no synthesized piano.</p></div><button id="panic" class="text-button panic-button">Release all notes</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

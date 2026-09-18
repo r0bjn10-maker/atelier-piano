@@ -1,0 +1,173 @@
+.keybed {
+  position:relative;
+  padding:0 3px 9px;
+  background:linear-gradient(90deg,#0a0c09,#282b22 1%,#141610 99%,#070a06);
+  box-shadow:inset 0 0 8px #000;
+  border-left:1px solid #4f544038;
+  border-right:1px solid #4f544038;
+  overflow:hidden
+}
+
+.keyboard {
+  height:var(--key-height);
+  position:relative;
+  isolation:isolate;
+  touch-action:none;
+  overscroll-behavior:none;
+  width:100%;
+  overflow:visible
+}
+
+.piano-key {
+  position:absolute;
+  top:0;
+  margin:0;
+  padding:0;
+  touch-action:none;
+  cursor:pointer;
+  outline:none!important;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+  transform-origin:center top;
+  will-change:auto;
+  transition:transform 55ms ease-out,box-shadow 55ms ease-out;
+  contain:layout style
+}
+
+.piano-key:focus-visible:after {
+  outline:2px solid #9e8051;
+  outline-offset:-5px
+}
+
+.white-key {
+  height:calc(100% - 4px);
+  z-index:1;
+  border:0;
+  border-left:.5px solid #9b9789;
+  border-right:.5px solid #79786a;
+  border-bottom:1px solid #928b77;
+  border-radius:0 0 2px 2px;
+  background:linear-gradient(90deg,#e5e0d2 0%,#f7f4e9 6%,#f3efe3 45%,#eeeadc 91%,#d6d1c0 100%);
+  box-shadow:0 7px 0 -1px #c2bba6,0 8px 0 -1px #9d9480,1px 8px 3px #000b,inset 0 -2px 2px #ffffffd9;
+  transform:translateY(0) rotateX(0deg);
+  color:#898675
+}
+
+.white-key:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(180deg,#0005 0%,#00000009 9%,#ffffff0a 47%,#ffffff60 81%,#fff8 95%,#c5beaa40 100%);
+  box-shadow:inset 0 1px 8px #0002
+}
+
+.white-key:after {
+  content:"";
+  position:absolute;
+  left:3px;
+  right:3px;
+  bottom:5px;
+  height:1px;
+  background:#fff9;
+  box-shadow:0 1px #c0b8a52b
+}
+
+.keyboard .white-key.pressed {
+  transform:translateY(3px) rotateX(-1deg);
+  background:linear-gradient(90deg,#d6d0bd,#e9e3d2 7%,#e8e2d1 90%,#c4bdaa);
+  box-shadow:0 2px 0 #a69c84,0 3px 2px #0009,inset 0 -1px 2px #fff8
+}
+
+.black-key {
+  width:calc(var(--white-width)*.61);
+  height:63%;
+  z-index:3;
+  border:1px solid #070905;
+  border-top:0;
+  border-bottom:7px solid #11130f;
+  border-left:1px solid #34392e;
+  border-right:1px solid #14170f;
+  border-radius:0 0 2px 2px;
+  background:linear-gradient(90deg,#272b23 0%,#161a13 12%,#25291f 75%,#34392d 94%,#191d14 100%);
+  box-shadow:2px 5px 3px #0007,1px 8px 4px #0006,-1px 2px 2px #0009,inset 0 -1px 0 #63684f;
+  transform:translateY(0);
+  color:#828575
+}
+
+.black-key:before {
+  content:"";
+  position:absolute;
+  inset:0 1px 1px;
+  background:linear-gradient(180deg,#070b05 0%,#ffffff08 15%,#ffffff02 58%,#ffffff08 88%,#ffffff12 98%,#0a0c07 100%);
+  border-radius:0 0 2px 2px;
+  border-left:1px solid #a4ad8830;
+  border-right:1px solid #89927214;
+  pointer-events:none
+}
+
+.black-key:after {
+  content:"";
+  position:absolute;
+  bottom:1px;
+  left:1px;
+  right:1px;
+  height:1px;
+  background:#8d937345;
+  box-shadow:0 -2px 4px #ffffff08
+}
+
+.keyboard .black-key.pressed {
+  transform:translateY(4px) rotateX(-1deg);
+  border-bottom-width:4px;
+  box-shadow:2px 3px 3px #0008,0 6px 3px #0007,inset 0 -1px 0 #4c533c;
+  background:linear-gradient(90deg,#20251b,#10150c 18%,#1e2418 80%,#2a3121)
+}
+
+.key-label {
+  position:absolute;
+  bottom:20px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:8px;
+  font-weight:400;
+  pointer-events:none;
+  opacity:0;
+  letter-spacing:.3px
+}
+
+.black-key .key-label {
+  bottom:15px;
+  font-size:8px
+}
+
+.show-labels .key-label {
+  opacity:.8
+}
+
+.keyboard button:hover:not(:disabled) {
+  color:inherit
+}
+
+.keyboard .piano-key:active:not(.pressed) {
+  transform:none
+}
+
+.keyboard .piano-key.pressed {
+  transition:none
+}
+
+.keyboard:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:8px;
+  background:linear-gradient(#0008,transparent);
+  z-index:5;
+  pointer-events:none
+}

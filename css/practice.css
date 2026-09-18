@@ -1,0 +1,59 @@
+html, body { height:100%; overflow:hidden; overscroll-behavior:none; }
+html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body { min-height:0; }
+[hidden] { display:none!important; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.studio { width:100%; max-width:none; height:100vh; height:100dvh; min-height:0; padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left)); display:grid; grid-template-rows:var(--sheet-height,40%) 12px minmax(0,1fr); gap:0; }
+.sheet-panel { min-height:0; overflow:hidden; display:flex; flex-direction:column; position:relative; border:1px solid #ffffff15; border-radius:8px; background:#181b19; box-shadow:inset 0 1px #ffffff05; }
+.studio { height:min(var(--app-height,100dvh),100dvh); }
+/* Keep native control taps fast; each playing/reading surface owns its gestures. */
+.toolbar, .sheet-toolbar { touch-action:manipulation; }
+.sheet-viewport, .keyboard, .practice-divider { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+@media (pointer:coarse) { .toolbar #tempo { font-size:16px; } }
+.sheet-toolbar { display:flex; gap:4px; align-items:center; flex-shrink:0; height:48px; padding:2px 10px; background:#252925; border-bottom:1px solid #ffffff0e; }
+.sheet-toolbar button { border:0; border-radius:4px; background:transparent; min-width:44px; height:44px; font-size:12px; padding:0 12px; white-space:nowrap; }
+.sheet-toolbar button:hover:not(:disabled) { background:#ffffff08; }
+.sheet-toolbar .sheet-open { color:var(--gold); }
+.sheet-filename { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:11px; padding:0 10px; }
+.sheet-toolbar .zoom-button { font-size:23px; padding:0; }
+.sheet-page-count { min-width:72px; text-align:center; font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.sheet-navigation { display:flex; align-items:center; gap:2px; }
+.sheet-viewport { position:relative; flex:1; min-height:0; overflow:hidden; touch-action:none; overscroll-behavior:none; contain:layout paint; }
+.sheet-paper { position:absolute; left:50%; top:50%; transform-origin:center; background:white; box-shadow:0 3px 24px #0006; pointer-events:none; }
+.sheet-paper > img,.sheet-paper > canvas { display:block; width:100%; height:100%; object-fit:contain; }
+.sheet-empty { position:absolute; inset:0; display:grid; place-items:center; }
+.open-score-button { display:flex; align-items:center; gap:12px; border:1px solid #c5ab7e55; border-radius:6px; padding:15px 24px; background:#c5ab7e09; color:var(--gold); font-size:14px; letter-spacing:.25px; }
+.open-score-button svg { width:22px; height:22px; }
+.sheet-message { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); max-width:90%; padding:8px 14px; border-radius:5px; background:#202321ee; color:var(--ink); font-size:12px; text-align:center; pointer-events:none; z-index:2; }
+.portrait-hint { display:none; }
+.practice-divider { touch-action:none; cursor:row-resize; position:relative; width:100%; border:0; background:transparent; padding:0; }
+.practice-divider::after { content:''; position:absolute; left:calc(50% - 20px); top:4px; width:40px; height:3px; border-radius:3px; background:#c5ab7e70; }
+.practice-divider:hover::after,.practice-divider:focus-visible::after { background:var(--gold); }
+.instrument { margin:0; padding:0; min-height:0; width:100%; display:block; }
+.console { margin:0; padding:0; border-radius:6px; overflow:hidden; height:100%; }
+.toolbar { height:var(--controls-height,60px); min-height:0; padding:0 14px; display:flex; align-items:center; justify-content:flex-start; gap:12px; flex-wrap:nowrap; border-bottom:2px solid #654343; }
+.practice-brand { display:flex; flex-direction:column; gap:3px; margin-right:auto; min-width:100px; font-size:13px; letter-spacing:3px; color:var(--gold); }
+.practice-brand small { color:var(--muted); font:10px Georgia,serif; letter-spacing:.6px; }
+.toolbar .sustain-button { height:44px; min-width:105px; padding:0 10px; }
+.toolbar .volume-control { width:110px; gap:8px; }
+.toolbar .volume-control input { width:80px; }
+.toolbar .control-divider { margin:0 2px; }
+.toolbar .icon-button { width:44px; height:44px; }
+.toolbar .recorder-controls,.toolbar .metronome-controls { gap:8px; margin:0; padding:0; border:0; }
+.toolbar .record-button,.toolbar .metronome-button { min-height:44px; padding:0 6px; }
+.toolbar .metronome-button span { display:none; }
+.toolbar .recording-time { min-width:36px; font-size:11px; }
+.toolbar .metronome-controls input { width:43px; padding:0; }
+.toolbar .bpm { font-size:9px; }
+.piano-lip { height:18px; min-height:0; padding:0 12px; font-size:7px; }
+.keybed { padding-bottom:6px; }
+.practice-presets { display:flex; gap:6px; margin:12px 0; }
+.practice-presets button { flex:1; min-height:44px; border:1px solid var(--line); background:#ffffff05; border-radius:5px; font-size:12px; }
+.practice-presets button[aria-pressed=true] { color:var(--gold); border-color:#c5ab7e70; background:#c5ab7e0c; }
+.settings-dialog { max-height:calc(100dvh - 32px); overflow:auto; }
+.setting-section { border-top:1px solid var(--line); padding-top:20px; }
+.sheet-storage-note { color:var(--muted); font-size:11px; line-height:1.6; }
+@media (max-width:1050px) { .toolbar { gap:7px; padding:0 8px; } .practice-brand { min-width:85px; font-size:11px; } .toolbar .volume-control { width:85px; } .toolbar .volume-control input { width:60px; } .toolbar .control-divider { display:none; } .toolbar .bpm { display:none; } }
+@media (max-width:850px) { .toolbar { gap:3px; } .toolbar .recorder-controls,.toolbar .metronome-controls { gap:2px; } .toolbar .volume-control { width:70px; } .toolbar .volume-control svg { display:none; } .toolbar .sustain-button { min-width:90px; } .sheet-filename { padding:0 4px; } }
+@media (max-width:699px) { .toolbar { display:flex; flex-wrap:wrap; justify-content:center; align-content:center; gap:0 6px; } .practice-brand { display:none; } .toolbar .recorder-controls { order:5; } .sheet-toolbar { padding:2px; gap:0; } .sheet-filename { display:none; } .sheet-toolbar button { padding:0 7px; } .sheet-toolbar .sheet-open { margin-right:auto; } .sheet-navigation button { font-size:0; } .sheet-navigation button::first-letter { font-size:20px; } .sheet-page-count { min-width:62px; } }
+@media (orientation:portrait) { .portrait-hint { display:block; position:absolute; bottom:8px; left:0; width:100%; text-align:center; color:#9fa395; font-size:10px; pointer-events:none; } .sheet-panel.has-sheet .portrait-hint { display:none; } }

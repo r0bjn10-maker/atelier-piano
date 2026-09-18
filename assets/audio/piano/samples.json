@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "name": "Salamander Concert Grand",
+  "author": "Alexander Holm",
+  "license": "CC BY 3.0",
+  "source": "https://github.com/sfzinstruments/SalamanderGrandPiano",
+  "maxTransposeSemitones": 2,
+  "layers": [
+    {
+      "id": "medium",
+      "minVelocity": 0,
+      "maxVelocity": 1,
+      "gain": 1,
+      "samples": {
+        "A0": "medium/A0.wav",
+        "C1": "medium/C1.wav",
+        "Ds1": "medium/Ds1.wav",
+        "Fs1": "medium/Fs1.wav",
+        "A1": "medium/A1.wav",
+        "C2": "medium/C2.wav",
+        "Ds2": "medium/Ds2.wav",
+        "Fs2": "medium/Fs2.wav",
+        "A2": "medium/A2.wav",
+        "C3": "medium/C3.wav",
+        "Ds3": "medium/Ds3.wav",
+        "Fs3": "medium/Fs3.wav",
+        "A3": "medium/A3.wav",
+        "C4": "medium/C4.wav",
+        "Ds4": "medium/Ds4.wav",
+        "Fs4": "medium/Fs4.wav",
+        "A4": "medium/A4.wav",
+        "C5": "medium/C5.wav",
+        "Ds5": "medium/Ds5.wav",
+        "Fs5": "medium/Fs5.wav",
+        "A5": "medium/A5.wav",
+        "C6": "medium/C6.wav",
+        "Ds6": "medium/Ds6.wav",
+        "Fs6": "medium/Fs6.wav",
+        "A6": "medium/A6.wav",
+        "C7": "medium/C7.wav",
+        "Ds7": "medium/Ds7.wav",
+        "Fs7": "medium/Fs7.wav",
+        "A7": "medium/A7.wav",
+        "C8": "medium/C8.wav"
+      }
+    }
+  ]
+}
