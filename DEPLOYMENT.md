@@ -53,7 +53,7 @@ See [Apple's Home Screen instructions](https://support.apple.com/guide/ipad/open
 
 ## Playing and updates
 
-- All 88 keys stay visible. Piano fingers and sheet gestures remain independent. Sustain, metronome, recording and playback use the original audio engine.
+- iPad starts with **2 octaves · wide keys**. Use the Keyboard selector for 3 octaves or All 88 keys; use the arrow buttons to move lower/higher. Piano fingers and sheet gestures remain independent. Sustain, metronome, recording and playback use the original audio engine.
 - Landscape height responds to Safari's bars, rotation and the onscreen keyboard. Safe-area padding protects the controls from the display edges.
 - Page scrolling, selection, double-tap zoom and native gesture defaults are suppressed on the custom playing/reading surfaces. The score's own pinch and pan controls remain active. iPadOS system gestures, such as the Home gesture, remain under the operating system's control.
 - Browser storage can be cleared or evicted. If offline data is removed, launch online to cache the app again. Your original music files remain untouched.

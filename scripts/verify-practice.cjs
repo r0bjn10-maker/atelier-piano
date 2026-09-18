@@ -42,6 +42,7 @@ async function fixtures() {
   try {
     const context = await browser.newContext({ viewport:{width:1194,height:834}, hasTouch:true, isMobile:true });
     await context.addInitScript(() => {
+      localStorage.setItem('atelier-keyboard-view-v1', JSON.stringify({ mode:'full', start:48 }));
       const NativeAudioContext = window.AudioContext;
       window.AudioContext = class extends NativeAudioContext { constructor(...args) { super(...args); window.testAudio = this; } };
     });

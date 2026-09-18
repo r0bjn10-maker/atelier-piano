@@ -55,7 +55,7 @@ export class PracticeLayout {
     const sheet = Math.round(clamp(this.usableHeight * this.ratio, 110, Math.max(110, this.usableHeight - controls - 150)));
     this.studio.style.setProperty('--sheet-height', `${sheet}px`);
     this.studio.style.setProperty('--controls-height', `${controls}px`);
-    this.piano.resize(Math.max(65, this.usableHeight - sheet - controls - 36));
+    this.piano.resize(Math.max(65, this.usableHeight - sheet - controls - 80));
     this.divider.setAttribute('aria-valuenow', String(Math.round(this.ratio * 100)));
     this.divider.setAttribute('aria-valuetext', `${Math.round(this.ratio * 100)} percent sheet music`);
     document.querySelectorAll('[data-practice-ratio]').forEach(button => button.setAttribute('aria-pressed', String(Math.abs(Number(button.dataset.practiceRatio) - this.ratio) < .01)));

@@ -69,6 +69,38 @@ function updateTime() {
 setInterval(() => { if (recorder.recording || recorder.playing) updateTime(); }, 100);
 updateRecorder();
 
+// Keep the 88-note instrument intact; only its visible playing window changes.
+let keyboardMode = matchMedia('(any-pointer: coarse)').matches || navigator.maxTouchPoints > 1 ? '2' : 'full';
+let keyboardStart = 48;
+try {
+  const saved = JSON.parse(localStorage.getItem('atelier-keyboard-view-v1'));
+  if (saved && ['2', '3', 'full'].includes(saved.mode)) { keyboardMode = saved.mode; keyboardStart = saved.start; }
+} catch {}
+function updateKeyboardControls() {
+  const view = piano.view;
+  $('keyboard-mode').value = view.mode;
+  $('keyboard-lower').disabled = !view.canLower;
+  $('keyboard-higher').disabled = !view.canHigher;
+  $('keyboard-range').textContent = `${view.first.label} – ${view.last.label}`;
+  $('keyboard-first').textContent = view.first.label;
+  $('keyboard-last').textContent = view.last.label;
+  $('keyboard-caption').textContent = view.mode === 'full' ? 'ATELIER · 88 KEYS' : `ATELIER · ${view.geometry.length} VISIBLE KEYS`;
+}
+function changeKeyboard(mode, direction = 0) {
+  touch.cancelAll();
+  // Release live fingers/typing, but preserve playback and the recording timeline.
+  for (const owner of [...notes.owners.keys()]) if (!owner.startsWith('playback:')) notes.release(owner);
+  if (direction) piano.shift(direction);
+  else piano.setView(mode, piano.view.start);
+  updateKeyboardControls();
+  try { localStorage.setItem('atelier-keyboard-view-v1', JSON.stringify({ mode:piano.view.mode, start:piano.view.start })); } catch {}
+}
+piano.setView(keyboardMode, keyboardStart);
+updateKeyboardControls();
+$('keyboard-mode').addEventListener('change', event => changeKeyboard(event.target.value));
+$('keyboard-lower').addEventListener('click', () => changeKeyboard(piano.view.mode, -1));
+$('keyboard-higher').addEventListener('click', () => changeKeyboard(piano.view.mode, 1));
+
 const practice = new PracticeLayout(piano);
 new SheetViewer({ toast });
 // These guards are scoped to our custom pointer surfaces, never the document.

@@ -47,6 +47,14 @@ body { min-height:0; }
 .toolbar .bpm { font-size:9px; }
 .piano-lip { height:18px; min-height:0; padding:0 12px; font-size:7px; }
 .keybed { padding-bottom:6px; }
+.keyboard-view-controls { height:44px; display:flex; align-items:center; gap:12px; padding:0 12px; background:#20241f; border-bottom:1px solid #c5ab7e33; touch-action:manipulation; }
+.keyboard-view-controls label { font-size:11px; color:var(--muted); }
+.keyboard-view-controls select { height:40px; max-width:210px; padding:0 24px 0 10px; border:1px solid #ffffff16; border-radius:4px; background:#292d27; color:var(--gold); font-size:14px; touch-action:manipulation; }
+.keyboard-navigation { margin-left:auto; display:flex; align-items:center; gap:8px; }
+.keyboard-navigation button { width:48px; height:44px; border:0; background:transparent; color:var(--gold); font-size:28px; }
+#keyboard-range { min-width:80px; text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.keyboard:not([data-mode=full]) .key-label { opacity:.75; font-size:11px; }
+@media (max-width:550px) { .keyboard-view-controls { padding:0 4px; gap:4px; } .keyboard-view-controls label { display:none; } .keyboard-view-controls select { max-width:185px; font-size:16px; } .keyboard-navigation { gap:0; } #keyboard-range { min-width:70px; } }
 .practice-presets { display:flex; gap:6px; margin:12px 0; }
 .practice-presets button { flex:1; min-height:44px; border:1px solid var(--line); background:#ffffff05; border-radius:5px; font-size:12px; }
 .practice-presets button[aria-pressed=true] { color:var(--gold); border-color:#c5ab7e70; background:#c5ab7e0c; }

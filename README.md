@@ -4,6 +4,12 @@ The existing Atelier / Concert Grand interface, now a **sheet music + full 88-ke
 
 ## Practice mode — version 3
 
+### Wide keys — version 3.2
+
+iPad and other touch devices now default to **2 octaves, C3–C5**: 25 playable keys with 15 white keys across the screen. Each white key is about 3.47 times the width of the full 88-key view. The Keyboard selector above the keys offers **2 octaves / 3 octaves / All 88 keys**, with 44px-high lower/higher octave buttons and the current pitch range. Desktop starts in full view unless a preference is saved. Mode and range are remembered locally.
+
+The instrument still contains all 88 pitches and uses the same samples. Switching views releases live fingers and computer keys safely, while sustain tails, recording and playback continue. Playback can sound notes outside the visible window. The computer-key mapping starts at the first visible note in a wide view; full view keeps its original middle-C mapping. C-note labels remain visible in wide views for orientation.
+
 For the current iPad/GitHub Pages setup, follow [the step-by-step deployment guide](DEPLOYMENT.md). Version 3.1 adds repository-isolated shell caching, explicit service-worker scope, bounded offline downloads, scoped Safari gesture guards, visual-viewport resizing and an offline readiness message in the existing Settings panel. The audio engine, samples and visual design are unchanged.
 
 - Sheet music sits above one compact piano control bar and the full A0–C8 keyboard. The dark charcoal, warm gold and ivory styling remains; the large decorative header and cabinet have been removed to recover playing space. The acoustic engine and recordings are unchanged.
@@ -56,7 +62,7 @@ The fullscreen control uses the browser API where available and shows the Home S
 ## Playing
 
 - **Touch:** independently tracked fingers support chords and glissandos. Coordinate hit testing uses the rendered key geometry, gives black keys priority in their overlapping area, and ignores animation displacement. Repeated movement within one key does not retrigger it. Pointer cancellation and lost capture release the affected note.
-- **Full instrument:** all 88 notes stay visible at every screen size. White-key width is exactly the available keyboard width divided by 52; black keys are 61% as wide and 63% as long. Small screens necessarily have narrow touch targets; there is no hidden range or alternate navigation mode.
+- **Keyboard view:** touch devices start with 2 octaves and 15 wide white keys. Choose 3 octaves for 22 white keys, or All 88 keys for 52 white keys. The arrow buttons shift the visible range, with limits at A0 and C8. Black keys retain 61% of white-key width and 63% of their length. All 88 pitches remain available to the audio engine and recordings.
 - **Sustain:** tap to latch the pedal or hold Space on a computer. Pedal-up releases sustained notes while preserving notes still held.
 - **Labels:** off by default. Settings can show just the eight C-note octave markers, keeping the keyboard uncluttered.
 - **Volume/ambience:** adjust the toolbar or Settings. The room effect is short and subtle; it is not a simulated string-resonance system.
@@ -64,7 +70,7 @@ The fullscreen control uses the browser API where available and shows the Home S
 - **Metronome:** 30–240 BPM, with an accent every four beats. It runs independently of piano voices and is not included in the recorded event sequence.
 - **Recovery:** focus loss, page hiding, and app switching release notes and stop the active take/metronome. Safari audio suspension shows the start overlay again. Settings also has Release all notes.
 
-Computer keys begin at **middle C, C4 / MIDI 60**:
+In **All 88 keys** mode, computer keys begin at **middle C, C4 / MIDI 60** (wide views start at their first visible note):
 
 | Note | C | C♯ | D | D♯ | E | F | F♯ | G | G♯ | A | A♯ | B | C | C♯ | D | D♯ | E |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

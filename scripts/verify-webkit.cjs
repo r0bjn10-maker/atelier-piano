@@ -9,6 +9,7 @@ const path = require('node:path');
   const report=[],errors=[],failed=[];
   try {
     const context=await browser.newContext({viewport:{width:1194,height:834},hasTouch:true,isMobile:true,deviceScaleFactor:2});
+    await context.addInitScript(()=>localStorage.setItem('atelier-keyboard-view-v1',JSON.stringify({mode:'full',start:48})));
     await context.addInitScript(()=>{const Native=window.AudioContext||window.webkitAudioContext; if(Native) window.AudioContext=class extends Native {constructor(...args){super(...args);window.testAudio=this;}};});
     page=await context.newPage();
     page.on('pageerror',e=>errors.push(e.message));
@@ -49,6 +50,17 @@ const path = require('node:path');
       assert.ok(geometry.visible && geometry.body<=geometry.height && geometry.scrollWidth<=geometry.width,JSON.stringify(geometry));
     }
     report.push('Four iPad landscape/portrait sizes fit all keys without page scrolling.');
+    await page.setViewportSize({width:1194,height:834});
+    await page.locator('#keyboard-mode').selectOption('2');
+    assert.equal(await page.locator('.piano-key:visible').count(),25);
+    assert.equal(await page.locator('.white-key:visible').count(),15);
+    await page.locator('#keyboard-higher').tap();
+    assert.equal(await page.locator('#keyboard-range').textContent(),'C4 – C6');
+    await page.locator('#keyboard-mode').selectOption('3');
+    assert.equal(await page.locator('.piano-key:visible').count(),37);
+    await page.locator('#keyboard-mode').selectOption('full');
+    assert.equal(await page.locator('.piano-key:visible').count(),88);
+    report.push('Wide 2/3-octave modes, octave navigation and full view selection pass in WebKit.');
     if(supportsAudio) await page.waitForFunction(()=>document.querySelector('#offline-status').textContent.includes('ready offline'),null,{timeout:60000});
     const scope=await page.evaluate(async()=>(await navigator.serviceWorker.ready).scope);
     assert.ok(scope.endsWith('/Piano/'));

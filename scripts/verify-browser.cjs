@@ -40,6 +40,7 @@ async function checkFullKeyboard(page) {
   const report = [], errors = [], failed = [];
   try {
     const context = await browser.newContext({ viewport: { width: 1194, height: 834 }, hasTouch: true, isMobile: true });
+    await context.addInitScript(() => localStorage.setItem('atelier-keyboard-view-v1', JSON.stringify({ mode:'full', start:48 })));
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
     page.on('response', response => { if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`); });

@@ -66,8 +66,13 @@
           <div class="recorder-controls"><button id="record" class="record-button"><span class="record-dot"></span><span id="record-label">Record</span></button><span id="recording-time" class="recording-time">00:00</span><button id="playback" class="icon-button" aria-label="Play recording" disabled><svg><use href="#i-play"/></svg></button><button id="clear-recording" class="icon-button" aria-label="Delete recording" disabled><svg><use href="#i-trash"/></svg></button></div><div class="metronome-controls"><button id="metronome" aria-label="Metronome" class="metronome-button" aria-pressed="false"><svg><use href="#i-metro"/></svg><span>Metronome</span><i id="beat-light"></i></button><input id="tempo" type="number" min="30" max="240" value="80" aria-label="Metronome tempo in beats per minute"><span class="bpm">BPM</span></div>
           <button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen"><svg><use href="#i-expand"/></svg></button><button id="settings-toggle" class="icon-button" aria-label="Open settings" title="Settings"><svg><use href="#i-settings"/></svg></button>
         </div>
-        <div class="keybed"><div id="keyboard" class="keyboard" aria-label="88-key piano, A0 to C8"></div></div>
-        <div class="piano-lip"><span>A0</span><span>ATELIER · 88 KEYS</span><span>C8</span></div>
+        <div class="keyboard-view-controls" aria-label="Keyboard view">
+          <label for="keyboard-mode">Keyboard</label>
+          <select id="keyboard-mode" aria-label="Keyboard range"><option value="2">2 octaves · wide keys</option><option value="3">3 octaves</option><option value="full">All 88 keys</option></select>
+          <div class="keyboard-navigation"><button id="keyboard-lower" aria-label="Lower octave" title="Move one octave lower">‹</button><span id="keyboard-range" role="status" aria-live="polite">C3 – C5</span><button id="keyboard-higher" aria-label="Higher octave" title="Move one octave higher">›</button></div>
+        </div>
+        <div class="keybed"><div id="keyboard" class="keyboard" aria-label="Piano keyboard"></div></div>
+        <div class="piano-lip"><span id="keyboard-first">C3</span><span id="keyboard-caption">ATELIER</span><span id="keyboard-last">C5</span></div>
       </div>
     </section>
   </main>

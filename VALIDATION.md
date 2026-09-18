@@ -1,4 +1,23 @@
-# Version 3.1 — iPad / GitHub Pages validation
+# Version 3.2 — wide touch keyboard
+
+The user approved replacing the all-88-keys default on iPad with a playable two-octave window. Touch devices default to C3–C5 (25 notes / 15 white keys); desktop retains full view. Users can switch to 3 octaves or All 88 keys, shift toward A0/C8, and restore the saved view offline. Audio samples and the audio engine were not changed.
+
+`node --test tests/*.test.js`: **21 passed**. New geometry tests hit every key in 2-, 3-octave and full views and check range limits and unclipped white endpoints.
+
+`scripts/verify-wide-keys.cjs`: **passed in Chromium**, including a five-finger chord, live note cleanup while changing range, uninterrupted recording with balanced note-on/off events, playback across a view change, navigation limits, all three modes and offline preference restoration. No browser exceptions. Measured white-key widths in CSS pixels:
+
+| Viewport | Two-octave white-key width |
+| --- | ---: |
+| 1024 × 768 | 66.4 px |
+| 1133 × 744 | 73.7 px |
+| 1180 × 820 | 76.8 px |
+| 1194 × 834 | 77.7 px |
+| 1366 × 1024 | 89.2 px |
+| 834 × 1194 portrait | 53.7 px |
+
+All tested layouts fit without page scrolling. The existing audio and sheet-viewer suites explicitly select full view and both passed. WebKit also passed the 2/3-octave selector, octave navigation and full-view checks; its Windows audio/offline limitations remain documented below. Physical touch comfort still needs the user's iPad; the measured CSS width is not a physical millimeter measurement.
+
+## Historical version 3.1 — iPad / GitHub Pages validation
 
 Verified on 18 September 2026. Current implementation preserves the sample engine, all 88 keys and existing visual design. Apple touch icon (180×180) and PWA icons (192×192, 512×512) were verified from PNG headers; manifest/start/scope/icon/PDF asset URLs resolve under a repository prefix.
 

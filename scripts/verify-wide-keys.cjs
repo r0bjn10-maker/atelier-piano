@@ -1,0 +1,67 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+const fs = require('node:fs/promises');
+const url=process.env.TEST_URL || 'http://localhost:5174/Piano/';
+(async()=>{
+  const browser=await chromium.launch({channel:'msedge',headless:true});
+  const report=[],errors=[];
+  try {
+    const context=await browser.newContext({viewport:{width:1194,height:834},hasTouch:true,isMobile:true});
+    const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message));
+    await page.goto(url); await page.getByRole('button',{name:'Tap to Start Piano'}).click({timeout:60000});
+    await page.waitForFunction(()=>!document.querySelector('#welcome').open);
+    assert.equal(await page.locator('#keyboard-mode').inputValue(),'2');
+    assert.equal(await page.locator('.piano-key:visible').count(),25);
+    assert.equal(await page.locator('.white-key:visible').count(),15);
+    assert.equal(await page.locator('#keyboard-range').textContent(),'C3 – C5');
+    const widths=[];
+    for(const [width,height] of [[1024,768],[1133,744],[1180,820],[1194,834],[1366,1024],[834,1194]]) {
+      await page.setViewportSize({width,height});
+      await page.waitForFunction(()=>document.querySelector('#keyboard').getBoundingClientRect().bottom<=innerHeight);
+      const geometry=await page.locator('.piano-key:visible').evaluateAll(keys=>({fit:keys.every(k=>{const r=k.getBoundingClientRect();return r.width>0&&r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight;}),white:keys.find(k=>k.classList.contains('white-key')).getBoundingClientRect().width,scroll:document.documentElement.scrollWidth>innerWidth||document.body.scrollHeight>innerHeight}));
+      assert.ok(geometry.fit);assert.equal(geometry.scroll,false);assert.ok(geometry.white>50);
+      widths.push({width,height,whiteKeyWidth:geometry.white});
+    }
+    await page.setViewportSize({width:1194,height:834});
+    await page.waitForFunction(()=>document.querySelector('#keyboard').getBoundingClientRect().bottom<=innerHeight && document.querySelector('#keyboard').getBoundingClientRect().width>innerWidth-50);
+    const cdp=await context.newCDPSession(page);
+    const points=await page.locator('.white-key:visible').evaluateAll(keys=>keys.slice(3,8).map((k,i)=>{const r=k.getBoundingClientRect();return {id:i+1,x:r.x+r.width/2,y:r.y+r.height*.85};}));
+    await page.locator('#record').click();
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:points});assert.equal(await page.locator('.pressed').count(),5);
+    await page.locator('#keyboard-higher').click();assert.equal(await page.locator('.pressed').count(),0);
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    assert.equal(await page.locator('#record-label').textContent(),'Stop');
+    assert.equal(await page.locator('#keyboard-range').textContent(),'C4 – C6');
+    await page.keyboard.press('a'); await page.locator('#record').click();
+    const take=await page.evaluate(()=>JSON.parse(localStorage.getItem('atelier-recording-v1')));
+    assert.ok(take.events.some(e=>e.type==='on'&&e.midi===60));
+    assert.equal(take.events.filter(e=>e.type==='on').length,take.events.filter(e=>e.type==='off').length);
+    await page.locator('#playback').click();
+    await page.locator('#keyboard-mode').selectOption('3');
+    assert.equal(await page.locator('.piano-key:visible').count(),37);
+    await page.waitForFunction(()=>document.querySelector('#playback').getAttribute('aria-label')==='Play recording');
+    assert.equal(await page.locator('.pressed').count(),0);
+    for(let i=0;i<10;i++) if(await page.locator('#keyboard-lower').isEnabled()) await page.locator('#keyboard-lower').click();
+    assert.equal(await page.locator('#keyboard-first').textContent(),'A0');
+    assert.equal(await page.locator('#keyboard-lower').isEnabled(),false);
+    for(let i=0;i<10;i++) if(await page.locator('#keyboard-higher').isEnabled()) await page.locator('#keyboard-higher').click();
+    assert.equal(await page.locator('#keyboard-last').textContent(),'C8');
+    assert.equal(await page.locator('#keyboard-higher').isEnabled(),false);
+    await page.locator('#keyboard-mode').selectOption('full');
+    assert.equal(await page.locator('.piano-key:visible').count(),88);
+    assert.equal(await page.locator('#keyboard-lower').isEnabled(),false);
+    assert.equal(await page.locator('#keyboard-higher').isEnabled(),false);
+    await page.locator('#keyboard-mode').selectOption('2');
+    await page.locator('#keyboard-lower').click(); await page.locator('#keyboard-lower').click();
+    await page.waitForFunction(()=>document.querySelector('#offline-status').textContent.includes('ready offline'));
+    const range=await page.locator('#keyboard-range').textContent();
+    await page.screenshot({path:'test-results/wide-keys-ipad.png'});
+    await context.setOffline(true);await page.reload();await page.getByRole('button',{name:'Tap to Start Piano'}).click({timeout:60000});
+    assert.equal(await page.locator('#keyboard-mode').inputValue(),'2');
+    assert.equal(await page.locator('#keyboard-range').textContent(),range);
+    assert.equal(await page.locator('.piano-key:visible').count(),25);
+    assert.deepEqual(errors,[]);
+    report.push('Touch default C3–C5: 25 keys, 15 white; 2/3/full modes and A0/C8 boundaries pass.','Five-finger chord and range switch release all live notes; recording continues with balanced note events.','Playback survives a mode change; keyboard typing follows visible range.','Saved mode and range restore after offline reload.');
+    await fs.writeFile('test-results/wide-keys-report.json',JSON.stringify({report,widths,errors},null,2));console.log(JSON.stringify({report,widths,errors},null,2));
+  }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

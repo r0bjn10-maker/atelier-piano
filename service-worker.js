@@ -1,7 +1,7 @@
 // Version shell and recordings separately so a UI update need not download 122 MB again.
 // CacheStorage is shared by every repository on USERNAME.github.io.
 const SHELL_PREFIX = `atelier-piano-shell-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
-const SHELL_CACHE = `${SHELL_PREFIX}v3.1`;
+const SHELL_CACHE = `${SHELL_PREFIX}v3.2`;
 const SAMPLE_CACHE = 'atelier-piano-samples-v2';
 const SHELL = [
   './', './index.html', './css/practice.css', './js/sheet-viewer.js', './js/practice-layout.js', './assets/vendor/pdfjs/cache-files.json', './css/style.css', './css/keyboard.css',
