@@ -4,6 +4,10 @@ The existing Atelier / Concert Grand interface, now a **sheet music + full 88-ke
 
 ## Practice mode — version 3
 
+### Two rows — version 3.3
+
+The fourth Keyboard option, **88 keys · 2 rows**, shows A0–E4 above F4–C8. Each row has 26 white keys across the available width, doubling their width compared with the single-row full keyboard. The sheet preview defaults to about 20% of screen height; **Expand sheet / Collapse sheet** temporarily enlarges it. Both rows share the existing audio, touch and recording system. Switching back restores the previous single-row layout and sheet ratio. The original three modes remain available unchanged.
+
 ### Wide keys — version 3.2
 
 iPad and other touch devices now default to **2 octaves, C3–C5**: 25 playable keys with 15 white keys across the screen. Each white key is about 3.47 times the width of the full 88-key view. The Keyboard selector above the keys offers **2 octaves / 3 octaves / All 88 keys**, with 44px-high lower/higher octave buttons and the current pitch range. Desktop starts in full view unless a preference is saved. Mode and range are remembered locally.

@@ -46,6 +46,7 @@ See [GitHub's publishing instructions](https://docs.github.com/en/pages/getting-
 1. In Safari, tap **Share**. Tap **View More** if needed, then **Add to Home Screen**.
 2. Keep **Open as Web App** enabled if shown. Choose the name **Atelier**, then tap **Add**.
 3. Launch Atelier using the new Home Screen icon. It opens in standalone mode, without Safari's normal toolbar.
+4. For all notes with wider keys, select **Keyboard → 88 keys · 2 rows**. Rotate to landscape. Use **Expand sheet / Collapse sheet** to change the compact sheet preview. The other three keyboard modes remain available.
 4. On the first Home Screen launch, remain online until loading and offline setup finish there too. Safari and installed apps may have separate storage. Tap to start audio again when requested, and reopen your score if needed.
 5. Once the installed app reports that it is ready offline, close it, enable Airplane Mode, and reopen it to check your own device's offline setup.
 

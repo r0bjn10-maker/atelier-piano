@@ -1,3 +1,11 @@
+# Version 3.3 — additional two-row mode
+
+22 unit tests pass, including the exact A0–E4 / F4–C8 split, 26 white keys per row, every pitch hit-tested in both rows, and the inactive separation between rows.
+
+`scripts/verify-two-rows.cjs` passes in Chromium: five fingers across both rows, cross-row glissando, sustain and recording preserved through all four modes, unchanged score image element and no additional sample downloads, balanced recorded note events, playback during a mode change, sheet expand/collapse, restoration of the old sheet size, and offline two-row preference restoration. Five iPad-sized viewports fit; landscape white-key widths range from 38.3 to 51.5 CSS pixels. The sheet occupies approximately 20% of the screen, with remaining space shared equally by the keyboards after existing controls and spacing.
+
+The original wide-key regression suite also passes. WebKit passes all four mode selections, equal row counts, sheet expansion, image/PDF loading and viewer persistence with no page errors. Windows WebKit cannot validate Web Audio or offline navigation; actual iPad audio and touch comfort still require physical-device testing. The existing piano engine and sample assets are unchanged.
+
 # Version 3.2 — wide touch keyboard
 
 The user approved replacing the all-88-keys default on iPad with a playable two-octave window. Touch devices default to C3–C5 (25 notes / 15 white keys); desktop retains full view. Users can switch to 3 octaves or All 88 keys, shift toward A0/C8, and restore the saved view offline. Audio samples and the audio engine were not changed.

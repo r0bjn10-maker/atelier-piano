@@ -32,7 +32,7 @@ test('all install paths resolve beneath a GitHub Pages repository, with correctl
 test('activating one repository only removes its own obsolete shell caches', async () => {
   const source = await readFile(new URL('../service-worker.js', import.meta.url),'utf8');
   const removed = [], events = {};
-  const keys = ['atelier-piano-shell-%2FPiano%2F-v3.0', 'atelier-piano-shell-%2FPiano%2F-v3.2', 'atelier-piano-shell-%2FOther%2F-v3.0', 'atelier-piano-shell-v3.0.1', 'atelier-piano-samples-v2'];
+  const keys = ['atelier-piano-shell-%2FPiano%2F-v3.0', 'atelier-piano-shell-%2FPiano%2F-v3.3', 'atelier-piano-shell-%2FOther%2F-v3.0', 'atelier-piano-shell-v3.0.1', 'atelier-piano-samples-v2'];
   vm.runInNewContext(source, { URL, self:{ registration:{scope:'https://example.github.io/Piano/'}, addEventListener:(type,fn)=>events[type]=fn, clients:{claim:async()=>{}} }, caches:{keys:async()=>keys,delete:async key=>removed.push(key)} });
   let complete; events.activate({waitUntil:promise=>complete=promise}); await complete;
   assert.deepEqual(removed,['atelier-piano-shell-%2FPiano%2F-v3.0']);

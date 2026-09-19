@@ -74,14 +74,16 @@ let keyboardMode = matchMedia('(any-pointer: coarse)').matches || navigator.maxT
 let keyboardStart = 48;
 try {
   const saved = JSON.parse(localStorage.getItem('atelier-keyboard-view-v1'));
-  if (saved && ['2', '3', 'full'].includes(saved.mode)) { keyboardMode = saved.mode; keyboardStart = saved.start; }
+  if (saved && ['2', '3', 'full', 'two-rows'].includes(saved.mode)) { keyboardMode = saved.mode; keyboardStart = saved.start; }
 } catch {}
 function updateKeyboardControls() {
   const view = piano.view;
   $('keyboard-mode').value = view.mode;
   $('keyboard-lower').disabled = !view.canLower;
   $('keyboard-higher').disabled = !view.canHigher;
-  $('keyboard-range').textContent = `${view.first.label} – ${view.last.label}`;
+  $('keyboard-range').textContent = view.mode === 'two-rows' ? 'A0–E4 / F4–C8' : `${view.first.label} – ${view.last.label}`;
+  document.querySelector('.studio').dataset.keyboardMode = view.mode;
+  $('sheet-size-toggle').hidden = view.mode !== 'two-rows';
   $('keyboard-first').textContent = view.first.label;
   $('keyboard-last').textContent = view.last.label;
   $('keyboard-caption').textContent = view.mode === 'full' ? 'ATELIER · 88 KEYS' : `ATELIER · ${view.geometry.length} VISIBLE KEYS`;

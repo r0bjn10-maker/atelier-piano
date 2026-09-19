@@ -52,6 +52,10 @@ body { min-height:0; }
 .keyboard-view-controls select { height:40px; max-width:210px; padding:0 24px 0 10px; border:1px solid #ffffff16; border-radius:4px; background:#292d27; color:var(--gold); font-size:14px; touch-action:manipulation; }
 .keyboard-navigation { margin-left:auto; display:flex; align-items:center; gap:8px; }
 .keyboard-navigation button { width:48px; height:44px; border:0; background:transparent; color:var(--gold); font-size:28px; }
+.sheet-size-toggle { min-height:44px; padding:0 10px; border:0; background:transparent; color:var(--gold); font-size:12px; }
+.studio[data-keyboard-mode=two-rows] .keyboard-navigation button { display:none; }
+.keyboard[data-mode=two-rows] { background:linear-gradient(to bottom,transparent calc(50% - 9px),#171b16 calc(50% - 9px),#171b16 calc(50% + 9px),transparent calc(50% + 9px)); }
+.keyboard[data-mode=two-rows]::after { content:'A0 – E4  ·  F4 – C8'; position:absolute; top:calc(50% - 5px); left:0; width:100%; text-align:center; font-size:7px; letter-spacing:1px; color:var(--gold); pointer-events:none; }
 #keyboard-range { min-width:80px; text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .keyboard:not([data-mode=full]) .key-label { opacity:.75; font-size:11px; }
 @media (max-width:550px) { .keyboard-view-controls { padding:0 4px; gap:4px; } .keyboard-view-controls label { display:none; } .keyboard-view-controls select { max-width:185px; font-size:16px; } .keyboard-navigation { gap:0; } #keyboard-range { min-width:70px; } }
