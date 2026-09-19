@@ -1,3 +1,9 @@
+# Version 3.4 — C4 split and collapsible sheet
+
+The two-row split now runs A0–B3 / C4–C8 (23 / 29 white keys), each filling the keybed width. All 88 pitches remain unique. The divider allows zero sheet height in all modes, stays visible for reopening, and retains the loaded document. Hidden PDF views skip unnecessary rendering.
+
+22 unit tests and the Chromium two-row integration suite pass, including drag-to-hide/reopen in both two-row and single-row layouts, preservation of the loaded score element, chords, glissando, sustain, recording, playback, mode switches and offline restoration.
+
 # Version 3.3 — additional two-row mode
 
 22 unit tests pass, including the exact A0–E4 / F4–C8 split, 26 white keys per row, every pitch hit-tested in both rows, and the inactive separation between rows.

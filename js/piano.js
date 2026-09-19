@@ -21,7 +21,7 @@ export function keyboardView(mode = 'full', start = 48) {
   const fullRange = mode === 'full' || mode === 'two-rows';
   const notes = fullRange ? NOTES : NOTES.filter(note => note.midi >= start && note.midi <= start + span);
   const geometry = createKeyGeometry(notes);
-  const rows = mode === 'two-rows' ? [NOTES.filter(note => note.midi <= 64), NOTES.filter(note => note.midi >= 65)].map(notes => {
+  const rows = mode === 'two-rows' ? [NOTES.filter(note => note.midi < 60), NOTES.filter(note => note.midi >= 60)].map(notes => {
     const geometry = createKeyGeometry(notes);
     return { geometry, whites:geometry.filter(note => !note.black), blacks:geometry.filter(note => note.black) };
   }) : null;
@@ -74,16 +74,16 @@ export class Piano {
       key.style.width = `${note.width / whites.length * 100}%`;
     }
     if (this.view.rows) {
-      this.element.style.setProperty('--white-width', `${100 / 26}%`);
+      this.element.style.setProperty('--white-width', `${100 / this.view.rows[0].whites.length}%`);
       this.view.rows.forEach((row, index) => row.geometry.forEach(note => {
         const key = this.keyElements.get(note.midi);
         key.dataset.row = String(index);
-        key.style.left = `${note.left / 26 * 100}%`;
-        key.style.width = `${note.width / 26 * 100}%`;
+        key.style.left = `${note.left / row.whites.length * 100}%`;
+        key.style.width = `${note.width / row.whites.length * 100}%`;
         key.style.top = index ? 'calc((var(--key-height) + 18px) / 2)' : '0px';
         key.style.height = note.black ? 'calc((var(--key-height) - 18px) * .315)' : 'calc((var(--key-height) - 18px) / 2 - 4px)';
       }));
-      this.element.setAttribute('aria-label', '88-key piano in two rows: top A0 to E4; bottom F4 to C8');
+      this.element.setAttribute('aria-label', '88-key piano in two rows: top A0 to B3; bottom C4 to C8');
     }
     this.element.dispatchEvent(new Event('keyboardviewchange'));
     return this.view;

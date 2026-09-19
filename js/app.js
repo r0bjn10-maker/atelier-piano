@@ -81,7 +81,7 @@ function updateKeyboardControls() {
   $('keyboard-mode').value = view.mode;
   $('keyboard-lower').disabled = !view.canLower;
   $('keyboard-higher').disabled = !view.canHigher;
-  $('keyboard-range').textContent = view.mode === 'two-rows' ? 'A0–E4 / F4–C8' : `${view.first.label} – ${view.last.label}`;
+  $('keyboard-range').textContent = view.mode === 'two-rows' ? 'A0–B3 / C4–C8' : `${view.first.label} – ${view.last.label}`;
   document.querySelector('.studio').dataset.keyboardMode = view.mode;
   $('sheet-size-toggle').hidden = view.mode !== 'two-rows';
   $('keyboard-first').textContent = view.first.label;

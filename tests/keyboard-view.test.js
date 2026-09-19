@@ -2,15 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { keyboardView, hitTestPiano } from '../js/piano.js';
 
-test('two rows cover all 88 pitches exactly once, with balanced widths and independent hit targets', () => {
+test('two rows cover all 88 pitches exactly once, with full-width rows and independent hit targets', () => {
   const view = keyboardView('two-rows');
-  assert.deepEqual(view.rows.map(row => [row.geometry[0].midi,row.geometry.at(-1).midi,row.whites.length]),[[21,64,26],[65,108,26]]);
+  assert.deepEqual(view.rows.map(row => [row.geometry[0].midi,row.geometry.at(-1).midi,row.whites.length]),[[21,59,23],[60,108,29]]);
   assert.deepEqual(view.rows.flatMap(row => row.geometry.map(key=>key.midi)),Array.from({length:88},(_,i)=>21+i));
   assert.equal(view.canLower,false); assert.equal(view.canHigher,false);
   for (const width of [996,1166,1338]) for (const height of [440,526,670]) {
     const rowHeight=(height-18)/2;
     view.rows.forEach((row,index)=>row.geometry.forEach(key=> {
-      const x=(key.left+key.width/2)/26*width;
+      const x=(key.left+key.width/2)/row.whites.length*width;
       const y=index*(rowHeight+18)+rowHeight*(key.black?.3:.85);
       assert.equal(hitTestPiano(x,y,width,height,view),key.midi);
     }));

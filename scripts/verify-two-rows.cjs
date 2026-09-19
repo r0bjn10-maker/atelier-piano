@@ -26,13 +26,32 @@ const fs = require('node:fs/promises');
     const rows=[0,1].map(i=>[...k.querySelectorAll(`.white-key[data-row="${i}"]`)].map(e=>e.getBoundingClientRect()));
     return {counts:rows.map(r=>r.length),widths:rows.map(r=>r[0].width),heights:rows.map(r=>r[0].height),fit:rows.flat().every(r=>r.left>=0&&r.right<=innerWidth&&r.bottom<=innerHeight),sheet:document.querySelector('#sheet-panel').getBoundingClientRect().height/innerHeight};
    });
-   assert.deepEqual(result.counts,[26,26]);assert.equal(result.widths[0],result.widths[1]);assert.equal(result.heights[0],result.heights[1]);assert.ok(result.fit);assert.ok(result.sheet>=.18&&result.sheet<=.22);
+   assert.deepEqual(result.counts,[23,29]);assert.ok(result.widths[0]>result.widths[1]);assert.equal(result.heights[0],result.heights[1]);assert.ok(result.fit);assert.ok(result.sheet>=.18&&result.sheet<=.22);
    sizes.push({width,height,...result});
   }
   await page.setViewportSize({width:1194,height:834});
   await page.waitForFunction(()=>{const s=document.querySelector('#sheet-panel').getBoundingClientRect().height/innerHeight;return document.querySelector('#keyboard').getBoundingClientRect().bottom<=innerHeight&&s>=.18&&s<=.22;});
   await page.locator('#sheet-size-toggle').click(); assert.equal(await page.locator('#sheet-size-toggle').getAttribute('aria-expanded'),'true');
   await page.locator('#sheet-size-toggle').click();
+  for (const mode of ['two-rows','2']) {
+   await page.locator('#keyboard-mode').selectOption(mode);
+   const divider=page.locator('#practice-divider');
+   let r=await divider.boundingBox();
+   await page.mouse.move(r.x+r.width/2,r.y+r.height/2);await page.mouse.down();
+   await page.mouse.move(r.x+r.width/2,0,{steps:12});await page.mouse.up();
+   await page.waitForFunction(()=>document.querySelector('.studio').style.getPropertyValue('--sheet-height')==='0px');
+   assert.equal(await page.locator('#sheet-panel').isVisible(),false);
+   assert.ok(await divider.isVisible());
+   r=await divider.boundingBox();
+   await page.mouse.move(r.x+r.width/2,r.y+r.height/2);await page.mouse.down();
+   await page.mouse.move(r.x+r.width/2,200,{steps:12});await page.mouse.up();
+   assert.ok(await page.locator('#sheet-panel').isVisible());
+   assert.ok(await page.evaluate(()=>window.originalScore===document.querySelector('#sheet-paper img')));
+   await divider.focus();await page.keyboard.press('Home');
+  }
+  await page.locator('#keyboard-mode').selectOption('two-rows');
+  assert.equal(await page.locator('[data-midi="60"]').getAttribute('data-row'),'1');
+  assert.equal(await page.locator('[data-midi="59"]').getAttribute('data-row'),'0');
   const point=async(midi,id)=>page.locator(`[data-midi="${midi}"]`).evaluate((e,id)=>{const r=e.getBoundingClientRect();return {id,x:r.x+r.width/2,y:r.y+r.height*.85};},id);
   const cdp=await context.newCDPSession(page);
   const points=await Promise.all([point(48,1),point(52,2),point(55,3),point(65,4),point(69,5)]);

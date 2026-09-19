@@ -147,7 +147,7 @@ export class SheetViewer {
     this.queueStore('delete'); this.toast('Sheet music removed from this device.');
   }
   measure() {
-    if (!this.file) return;
+    if (!this.file || !this.viewport.clientHeight) return;
     const oldWidth = this.fitWidth || 1, oldHeight = this.fitHeight || 1;
     this.fitScale = Math.min(Math.max(1, this.viewport.clientWidth - 24) / this.width, Math.max(1, this.viewport.clientHeight - 16) / this.height);
     this.fitWidth = this.width * this.fitScale; this.fitHeight = this.height * this.fitScale;
@@ -199,7 +199,7 @@ export class SheetViewer {
     } catch { if (generation === this.generation) this.message('This page could not be rendered. Try another page.'); }
   }
   async render() {
-    if (!this.pdf || !this.pageProxy || this.pointers.size) return;
+    if (!this.pdf || !this.pageProxy || this.pointers.size || !this.viewport.clientHeight) return;
     const generation = ++this.renderGeneration;
     this.renderTask?.cancel();
     // Cap the backing canvas at four million pixels; only one page is retained.

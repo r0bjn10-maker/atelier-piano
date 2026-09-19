@@ -4,9 +4,9 @@ The existing Atelier / Concert Grand interface, now a **sheet music + full 88-ke
 
 ## Practice mode — version 3
 
-### Two rows — version 3.3
+### Two rows — version 3.4
 
-The fourth Keyboard option, **88 keys · 2 rows**, shows A0–E4 above F4–C8. Each row has 26 white keys across the available width, doubling their width compared with the single-row full keyboard. The sheet preview defaults to about 20% of screen height; **Expand sheet / Collapse sheet** temporarily enlarges it. Both rows share the existing audio, touch and recording system. Switching back restores the previous single-row layout and sheet ratio. The original three modes remain available unchanged.
+The fourth Keyboard option, **88 keys · 2 rows**, shows A0–B3 above C4–C8. Both rows fill the available width, with 23 and 29 white keys respectively. The sheet preview defaults to about 20% of screen height; **Expand sheet / Collapse sheet** temporarily enlarges it. Both rows share the existing audio, touch and recording system. Switching back restores the previous single-row layout and sheet ratio. The original three modes remain available. In every mode, drag the sheet divider to the top to hide the sheet completely; drag it back down to reopen the same score.
 
 ### Wide keys — version 3.2
 
